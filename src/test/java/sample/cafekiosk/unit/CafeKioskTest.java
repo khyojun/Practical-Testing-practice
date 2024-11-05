@@ -7,6 +7,7 @@ import sample.cafekiosk.unit.berverage.Latte;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
+
 class CafeKioskTest {
 
 
@@ -59,5 +60,6 @@ class CafeKioskTest {
         cafeKiosk.clear();
         assertThat(cafeKiosk.getBerverages().size()).isEqualTo(0);
     }
+
 
 }
