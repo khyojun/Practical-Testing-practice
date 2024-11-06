@@ -93,6 +93,21 @@ class CafeKioskTest {
     }
 
 
+    @Test
+    void calculateTotalPrice(){
+        CafeKiosk cafeKiosk = new CafeKiosk();
+        Americano americano = new Americano();
+        Latte latte = new Latte();
+
+        cafeKiosk.add(americano);
+        cafeKiosk.add(latte);
+
+        int totalPrice = cafeKiosk.calculateTotalPrice();
+
+        assertThat(totalPrice).isEqualTo(8500);
+    }
+
+
 
     @Test
     void createOrder(){ // 이 친구는 항상 성공하는 테스트가 아님! 시간 따라 결과가 달라짐!
