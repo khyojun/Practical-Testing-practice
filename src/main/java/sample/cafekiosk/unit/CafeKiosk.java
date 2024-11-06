@@ -46,11 +46,9 @@ public class CafeKiosk {
     }
 
     public int calculateTotalPrice() {
-        int totalPrice = 0;
-        for (Berverage berverage : berverages) {
-            totalPrice += berverage.getPrice();
-        }
-        return totalPrice;
+        return berverages.stream()
+                .mapToInt(Berverage::getPrice)
+                .sum();
     }
 
 
