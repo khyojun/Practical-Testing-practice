@@ -35,14 +35,14 @@ public class Order extends BaseEntity {
 
     public Order(List<Product> products, LocalDateTime registeredTime) { // 이것도 단위테스트를 해야할 거 같음!
         this.orderStatus = OrderStatus.INIT;
-        this.totalPrice = caculateTotalPrice(products);
+        this.totalPrice = calculateTotalPrice(products);
         this.registeredDateTime = registeredTime;
         this.orderProductList = products.stream()
                 .map(product -> new OrderProduct(this, product))
                 .toList();
     }
 
-    private int caculateTotalPrice(List<Product> products) {
+    private int calculateTotalPrice(List<Product> products) {
         return products.stream().mapToInt(Product::getPrice)
                 .sum();
     }
