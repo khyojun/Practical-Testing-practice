@@ -53,7 +53,7 @@ class ProductServiceTest {
 
 
         //when
-        ProductResponse productResponse = productService.createProduct(request);
+        ProductResponse productResponse = productService.createProduct(request.toServiceRequest());
 
 
         //then
@@ -87,7 +87,7 @@ class ProductServiceTest {
 
 
         //when
-        ProductResponse productResponse = productService.createProduct(request);
+        ProductResponse productResponse = productService.createProduct(request.toServiceRequest());
 
 
         //then
