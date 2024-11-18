@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import sample.cafekiosk.spring.api.service.order.OrderService;
 import sample.cafekiosk.spring.api.service.order.request.OrderCreateRequest;
+import sample.cafekiosk.spring.api.service.order.response.OrderResponse;
 
 import java.time.LocalDateTime;
 
@@ -17,10 +18,9 @@ public class OrderController {
 
 
     @PostMapping("/api/v1/orders/new")
-    public void createOrder(@RequestBody OrderCreateRequest request){
+    public OrderResponse createOrder(@RequestBody OrderCreateRequest request){
         LocalDateTime now = LocalDateTime.now();
-        orderService.createOrder(request, now);
-
+        return orderService.createOrder(request, now);
     }
 
 

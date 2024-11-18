@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 //@SpringBootTest // 결론 spring boot test를 선호하게 됨
 @DataJpaTest // springboot test 보다는 가벼움 -> jpa 관련 빈들만 주입
+// 위 springbootTest 와는 달리 여기에서는 @Transactional 이 있어서 자동으로 롤백이 되어짐!
 @ActiveProfiles("test")
 class ProductRepositoryTest {
 
