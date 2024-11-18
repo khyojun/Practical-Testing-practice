@@ -3,7 +3,7 @@ package sample.cafekiosk.spring.api.service.order;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import sample.cafekiosk.spring.api.service.order.request.OrderCreateRequest;
+import sample.cafekiosk.spring.api.service.order.request.OrderCreateServiceRequest;
 import sample.cafekiosk.spring.api.service.order.response.OrderResponse;
 import sample.cafekiosk.spring.domain.order.Order;
 import sample.cafekiosk.spring.domain.order.OrderRepository;
@@ -35,7 +35,10 @@ public class OrderService {
      * optimistic lock / pessimistic lock / ... locking 개념을 사용 순차적으로 처리될 수 있도록
      * 사실 이 키오스크 문제가 조금 복잡하게 있음!
      */
-    public OrderResponse createOrder(OrderCreateRequest request, LocalDateTime now) {
+    // 여기 request 가 controller에 의존하는 dto 가 파라미터에 있음!
+    // service 가 controller를 알고있음! layered 에서 가장 좋은 그림은 하위 레이어가 상위 레이어를 모르는 형태가 가장 좋음!
+    // 그래서 강사님은 서비스용 requestDto 를 만들고 진행하심!
+    public OrderResponse createOrder(OrderCreateServiceRequest request, LocalDateTime now) {
         List<String> productNumbers = request.getProductNumbers();
         //Product
         List<Product> products = findProductsBy(productNumbers);
