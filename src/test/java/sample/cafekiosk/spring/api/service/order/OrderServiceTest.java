@@ -210,6 +210,12 @@ class OrderServiceTest {
         Stock stock2 = Stock.create("002", 2);
 
         stock1.deductQuantity(1); // todo : 이런식으로 하면 안됨!
+        // createOrder 가 주 행위임! 재고 차단이라는 다른 행위를 가져다 썼음!
+        // 1. 다른 맥락의 친구가 들어옴! 논리적 사고를 한 번 더 진행해야한다는 것임!
+        // 2. deductQuantity 가 잘못될 경우! createOrder 가 잘못될 수 있음! 앞의 given 절 하다가 테스트를 실패한 것임! 이건 좀...! 이후에 테스트 왜 깨졌는지 유추하기가 어려워짐! 조금 더 커지면!
+        // 그래서 웬만하면 생성자 기반으로 테스트 진행하면 좋음! 순수한 생성자나 빌더로 구성하는게 좋음! 팩토리 메서드도 어떤 의도를 가지고 만든 것임!
+        // 팩토리 메서드도 어떤 목적이 있음! ex) 어떤 인자를 받고 싶다거나, 어떤 거 전에 검증을 하거나
+        // 그래서 given절은 웬만하면 생성자들을 구성으로 오게 하거나 API 들을 최대한 사용하지 않고 독립적으로 할 수 있도록 하는것이 좋다!
 
         stockRepository.saveAll(List.of(stock1, stock2));
 
