@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import sample.cafekiosk.spring.IntegrationTestSupport;
 import sample.cafekiosk.spring.api.service.order.request.OrderCreateServiceRequest;
 import sample.cafekiosk.spring.api.service.order.response.OrderResponse;
 import sample.cafekiosk.spring.domain.order.OrderRepository;
@@ -24,14 +25,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 
 
-@SpringBootTest
-//@Transactional // 이거 되게 좋긴함! 자동으로 clean 시켜주는거 같아서말야!
-// 해당 어노테이션을 넣으면 실제 프로덕션 코드에 @Transactional 이 적용되어있는거 같아 보임! 우리는 안했는데!
-// 되게 뒤늦게 이런 사항이 발견이 될 수 있음! 이런 것들을 쓰지 말자! 라기 보다는 잘 알고 써야 한다는 거임!
-// 롤백 기능때문에 쓰면 너무 좋지만! 부작용에 대해 인지를 하고 사용하는것이 좋지 않을까? 함!
-@ActiveProfiles("test")
-//@DataJpaTest
-class OrderServiceTest {
+
+class OrderServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private ProductRepository productRepository;
@@ -210,6 +205,12 @@ class OrderServiceTest {
         Stock stock2 = Stock.create("002", 2);
 
         stock1.deductQuantity(1); // todo : 이런식으로 하면 안됨!
+        // createOrder 가 주 행위임! 재고 차단이라는 다른 행위를 가져다 썼음!
+        // 1. 다른 맥락의 친구가 들어옴! 논리적 사고를 한 번 더 진행해야한다는 것임!
+        // 2. deductQuantity 가 잘못될 경우! createOrder 가 잘못될 수 있음! 앞의 given 절 하다가 테스트를 실패한 것임! 이건 좀...! 이후에 테스트 왜 깨졌는지 유추하기가 어려워짐! 조금 더 커지면!
+        // 그래서 웬만하면 생성자 기반으로 테스트 진행하면 좋음! 순수한 생성자나 빌더로 구성하는게 좋음! 팩토리 메서드도 어떤 의도를 가지고 만든 것임!
+        // 팩토리 메서드도 어떤 목적이 있음! ex) 어떤 인자를 받고 싶다거나, 어떤 거 전에 검증을 하거나
+        // 그래서 given절은 웬만하면 생성자들을 구성으로 오게 하거나 API 들을 최대한 사용하지 않고 독립적으로 할 수 있도록 하는것이 좋다!
 
         stockRepository.saveAll(List.of(stock1, stock2));
 
