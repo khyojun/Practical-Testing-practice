@@ -15,7 +15,7 @@ public class MailService {
 
     public boolean sendMail(String fromEmail, String toEmail, String subject, String content) {
 
-        boolean result= mailSendClient.sendEmail(fromEmail, toEmail, subject, content);
+        boolean result= mailSendClient.sendEmail(fromEmail, toEmail, subject, content); // 요것만 stubbing 다른건 동일하게 작동 이럴때 spy 활용
 
         if(result) {
             mailSendHistoryRepository.save(MailSendHistory.builder()
@@ -24,6 +24,11 @@ public class MailService {
                     .subject(subject)
                     .content(content)
                     .build());
+
+            mailSendClient.a();
+            mailSendClient.b();
+
+
             return true;
         }
         return false;
