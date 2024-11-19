@@ -31,6 +31,7 @@ class ProductTypeTest {
                 assertThat(result).isTrue();
         }
 
+        }
     }
 
 
