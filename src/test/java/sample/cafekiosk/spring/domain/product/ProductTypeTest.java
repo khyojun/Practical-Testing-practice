@@ -2,9 +2,16 @@ package sample.cafekiosk.spring.domain.product;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static sample.cafekiosk.spring.domain.product.ProductType.*;
 
 class ProductTypeTest {
     // 이런것도 테스트 해야해?
@@ -17,14 +24,14 @@ class ProductTypeTest {
         //given
         ProductType[] productTypes = ProductType.values();
         for (ProductType productType : productTypes) {
-            if(productType == ProductType.HANDMADE){
+            if(productType == HANDMADE){
                 //when
                 boolean result = ProductType.containsStockType(productType);
 
                 assertThat(result).isFalse();
             }
 
-            if(productType == ProductType.BAKERY || productType == ProductType.BOTTLE){
+            if(productType == BAKERY || productType == BOTTLE){
                 //when
                 boolean result = ProductType.containsStockType(productType);
                 //then
@@ -39,7 +46,7 @@ class ProductTypeTest {
     @Test
     void containsStockType(){
         //given
-        ProductType givenType = ProductType.HANDMADE;
+        ProductType givenType = HANDMADE;
 
 
         //when
@@ -56,7 +63,7 @@ class ProductTypeTest {
     @Test
     void containsStockType2(){
         //given
-        ProductType givenType = ProductType.BAKERY;
+        ProductType givenType = BAKERY;
 
 
         //when
@@ -66,5 +73,62 @@ class ProductTypeTest {
         //then
         assertThat(result).isTrue();
     }
+
+
+
+    @DisplayName("상품 타입이 재고 관련 타입인지를 체크한다.")
+    @Test
+    void containsStockType3(){
+        //given
+        ProductType givenType1 = HANDMADE;
+        ProductType givenType2 = BOTTLE;
+        ProductType givenType3 = BAKERY;
+
+
+
+        //when
+        boolean result1 = ProductType.containsStockType(givenType1);
+        boolean result2 = ProductType.containsStockType(givenType2);
+        boolean result3 = ProductType.containsStockType(givenType3);
+
+
+        //then
+        assertThat(result1).isTrue();
+        assertThat(result2).isTrue();
+        assertThat(result3).isTrue();
+    }
+
+
+    @DisplayName("상품 타입이 재고 관련 타입인지를 체크한다.")
+    @CsvSource({"HANDMADE, false","BOTTLE, true", "BAKERY, true"})
+    @ParameterizedTest
+    void containsStockType4(ProductType productType, boolean expected){
+        //when
+        boolean result1 = ProductType.containsStockType(productType);
+
+        //then
+        assertThat(result1).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> provieProductTypesForCheckingStockType(){
+        return Stream.of(
+                Arguments.of(HANDMADE, false),
+                Arguments.of(BOTTLE, true),
+                Arguments.of(BAKERY, true)
+        );
+    }
+
+    @DisplayName("상품 타입이 재고 관련 타입인지를 체크한다.")
+    @MethodSource("provieProductTypesForCheckingStockType")
+    @ParameterizedTest
+    void containsStockType5(ProductType productType, boolean expected){
+        //when
+        boolean result1 = ProductType.containsStockType(productType);
+
+        //then
+        assertThat(result1).isEqualTo(expected);
+    }
+
+
 
 }
