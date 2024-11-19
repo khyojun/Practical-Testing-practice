@@ -2,6 +2,7 @@ package sample.cafekiosk.spring.domain.order;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sample.cafekiosk.spring.domain.BaseEntity;
@@ -33,14 +34,16 @@ public class Order extends BaseEntity {
     private List<OrderProduct> orderProductList = new ArrayList<>();
 
 
-    public Order(List<Product> products, LocalDateTime registeredTime) { // 이것도 단위테스트를 해야할 거 같음!
-        this.orderStatus = OrderStatus.INIT;
+    @Builder
+    private Order(List<Product> products, OrderStatus orderStatus, LocalDateTime registeredDateTime, List<OrderProduct> orderProductList) {
+        this.orderStatus = orderStatus;
         this.totalPrice = calculateTotalPrice(products);
-        this.registeredDateTime = registeredTime;
+        this.registeredDateTime = registeredDateTime;
         this.orderProductList = products.stream()
                 .map(product -> new OrderProduct(this, product))
                 .toList();
     }
+
 
     private int calculateTotalPrice(List<Product> products) {
         return products.stream().mapToInt(Product::getPrice)
@@ -49,6 +52,10 @@ public class Order extends BaseEntity {
 
 
     public static Order create(List<Product> products, LocalDateTime registeredTime) {
-        return new Order(products, registeredTime);
+         return Order.builder()
+                .orderStatus(OrderStatus.INIT)
+                .products(products)
+                .registeredDateTime(registeredTime)
+                .build();
     }
 }
