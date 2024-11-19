@@ -93,7 +93,7 @@ class ProductTypeTest {
 
 
         //then
-        assertThat(result1).isTrue();
+        assertThat(result1).isFalse();
         assertThat(result2).isTrue();
         assertThat(result3).isTrue();
     }

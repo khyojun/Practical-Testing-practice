@@ -6,16 +6,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
+import sample.cafekiosk.spring.IntegrationTestSupport;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-//@SpringBootTest // 결론 spring boot test를 선호하게 됨
-@DataJpaTest // springboot test 보다는 가벼움 -> jpa 관련 빈들만 주입
-// 위 springbootTest 와는 달리 여기에서는 @Transactional 이 있어서 자동으로 롤백이 되어짐!
-@ActiveProfiles("test")
-class ProductRepositoryTest {
+@Transactional
+class ProductRepositoryTest extends IntegrationTestSupport {
 
 
     @Autowired
