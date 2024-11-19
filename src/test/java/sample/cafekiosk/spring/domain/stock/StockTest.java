@@ -95,20 +95,20 @@ class StockTest {
     }
 
 
-    @DisplayName("tes")
-    @TestFactory
-    Collection<DynamicTest> test() {
-
-        return List.of(
-                DynamicTest.dynamicTest("", () -> {
-
-                }),
-
-                DynamicTest.dynamicTest("", () -> {
-
-                })
-        );
-    }
+//    @DisplayName("tes")
+//    @TestFactory
+//    Collection<DynamicTest> test() {
+//
+//        return List.of(
+//                DynamicTest.dynamicTest("", () -> {
+//
+//                }),
+//
+//                DynamicTest.dynamicTest("", () -> {
+//
+//                })
+//        );
+//    }
 
 
     @DisplayName("재고 차감 시나리오")

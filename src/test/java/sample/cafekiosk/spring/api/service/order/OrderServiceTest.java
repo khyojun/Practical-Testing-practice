@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import sample.cafekiosk.spring.IntegrationTestSupport;
 import sample.cafekiosk.spring.api.service.order.request.OrderCreateServiceRequest;
 import sample.cafekiosk.spring.api.service.order.response.OrderResponse;
 import sample.cafekiosk.spring.domain.order.OrderRepository;
@@ -24,14 +25,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 
 
-@SpringBootTest
-//@Transactional // 이거 되게 좋긴함! 자동으로 clean 시켜주는거 같아서말야!
-// 해당 어노테이션을 넣으면 실제 프로덕션 코드에 @Transactional 이 적용되어있는거 같아 보임! 우리는 안했는데!
-// 되게 뒤늦게 이런 사항이 발견이 될 수 있음! 이런 것들을 쓰지 말자! 라기 보다는 잘 알고 써야 한다는 거임!
-// 롤백 기능때문에 쓰면 너무 좋지만! 부작용에 대해 인지를 하고 사용하는것이 좋지 않을까? 함!
-@ActiveProfiles("test")
-//@DataJpaTest
-class OrderServiceTest {
+
+class OrderServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private ProductRepository productRepository;
