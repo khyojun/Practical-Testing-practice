@@ -37,7 +37,7 @@ import java.util.List;
 public class ProductService {
 
     private final ProductRepository productRepository;
-
+    private final ProductNumberFactory productNumberFactory;
 
 
     // 동시성 이슈 발생 가능성 있음!
@@ -46,7 +46,7 @@ public class ProductService {
     @Transactional
     public ProductResponse createProduct(ProductServiceRequest request) {
         // nextProductNumber
-        String nextProductNumber = createNextProductNumber();
+        String nextProductNumber = productNumberFactory.createNextProductNumber();
 
         Product product = request.toEntity(nextProductNumber);
         Product savedProduct = productRepository.save(product);
@@ -54,17 +54,7 @@ public class ProductService {
         return ProductResponse.of(savedProduct);
     }
 
-    private String createNextProductNumber() {
-        String latestProductNumber = productRepository.findLatestProduct();
-        if(latestProductNumber == null){
-            return "001";
-        }
 
-        int latestProductNumberInt = Integer.parseInt(latestProductNumber);
-        int nextProductNumberInt = latestProductNumberInt + 1;
-
-        return String.format("%03d", nextProductNumberInt);
-    }
 
 
 
