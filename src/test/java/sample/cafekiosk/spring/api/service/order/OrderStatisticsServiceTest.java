@@ -44,7 +44,7 @@ class OrderStatisticsServiceTest {
     @Autowired
     private OrderProductRepository orderProductRepository;
 
-    @MockBean
+    @MockBean // context 가 떠야 효과가 있는 친구임!
     private MailSendClient mailSendClient;
 
     @AfterEach
